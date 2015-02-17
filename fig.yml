@@ -1,0 +1,16 @@
+db:
+  image: dockerfile/mongodb
+  # for fix this image's bug
+  command: mongod --smallfiles
+
+web:
+  build: .
+  command: node app.js
+  volumes:
+    - ./app.js:/data/app.js
+  ports:
+    - "3000:3000"
+  links:
+    - db
+  environment: 
+   MONGO_URL: mongodb://db
